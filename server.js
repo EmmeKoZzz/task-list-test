@@ -1,11 +1,14 @@
-import express from 'express'
+import express from 'express';
+import cors from 'cors'
 
 // Mock Class for TodoEntries
 class TODOEntry {
-	constructor(title, description) {
+	constructor(title, {description, endAt}) {
 		this.id = countId;
 		this.title = title;
 		this.description = description;
+		this.endAt = endAt;
+		this.state = false;
 		this.createAt = new Date();
 		countId++;
 	}
@@ -13,24 +16,31 @@ class TODOEntry {
 	id;
 	title;
 	description;
+	state;
+	endAt;
 	createAt;
 }
 
+// SERVER
 const app = express();
 const port = 3000;
 
+// Server State
 let countId = 0;
 let todoList = []
 
+// MIDDLEWARES
+app.use(cors());
 app.use(express.json());
 
+// CONTROLLERS
 // Get ToDoList
 app.get('/', (req, res) => res.send(todoList));
 
 // Create a new entry
-app.post('/', ({body: {title, description}}, res) => {
+app.post('/', ({body: {title, description, endAt}}, res) => {
 	if (!title) return res.status(400).json({error: 'Title is required'})
-	const newEntry = new TODOEntry(title, description);
+	const newEntry = new TODOEntry(title, {description, endAt});
 	todoList.push(newEntry);
 
 	return res.send(newEntry);
@@ -44,9 +54,20 @@ app.put('/:id', ({body, params}, res) => {
 
 	todoList[ix].title = body.title;
 	todoList[ix].description = body.description;
+	todoList[ix].endAt = body.endAt;
 
-	return todoList[ix];
+	return res.send(todoList[ix]);
 })
+
+// Change entry status
+app.patch('/:id', ({body, params}, res) => {
+	const ix = findEntry(entryId);
+	if (ix === -1) return res.status(404).json({error: 'Not found any entry with id of: ' + entryId});
+
+	todoList[ix].state = true;
+
+	return res.send(todoList[ix]);
+});
 
 // Delete entry 
 app.delete('/:id', ({params: {id: entryId}}, res) => {
@@ -61,6 +82,7 @@ function findEntry(entryId) {
 	return todoList.findIndex((entry) => entry.id === entryId)
 }
 
+// APP Builder
 app.listen(port, () => {
 	console.log(`Express Server listening to port ${port}`);
 })
