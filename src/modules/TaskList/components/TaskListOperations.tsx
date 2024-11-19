@@ -29,6 +29,11 @@ export default function TaskListOperations({taskServices, onAdd}: Props) {
 					sx={{ml: 1, flex: 1, color: 'black'}}
 					placeholder="Search"
 					onChange={(e) => setSearch(e.target.value)}
+					onKeyDown={(e) => {
+						if (e.code !== 'Enter') return;
+						setSearch(e.currentTarget.value)
+						handleSearch();
+					}}
 				/>
 				<Divider variant="middle" orientation="vertical"/>
 				<Button onClick={handleSearch}>
