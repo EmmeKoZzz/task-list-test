@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors'
 
 // Mock Class for TodoEntries
-class TODOEntry {
+class TaskEntry {
 	constructor(title, description) {
 		this.id = countId;
 		this.title = title;
@@ -25,35 +25,14 @@ const port = 3000;
 
 // Server State
 let countId = 0;
-let todoList = [
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'),
-	new TODOEntry('You can specify how many digits', 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.')
+let taskList = [
+	new TaskEntry('Lorem Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+	new TaskEntry('Lorem Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+	new TaskEntry('Lorem Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+	new TaskEntry('Lorem Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+	new TaskEntry('Lorem Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+	new TaskEntry('Lorem Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+	new TaskEntry('Lorem Ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
 ]
 
 // MIDDLEWARES
@@ -64,9 +43,9 @@ app.use(express.json());
 // Get ToDoList
 app.get('/', ({query}, res) => {
 	let {page, size, keyword} = query
-	let list = todoList;
+	let list = taskList;
 	if (keyword) {
-		list = todoList.filter(todo => todo.title.toLowerCase().includes(keyword.toLocaleLowerCase()))
+		list = taskList.filter(todo => todo.title.toLowerCase().includes(keyword.toLocaleLowerCase()))
 	}
 
 	if (list.length === 0) return res.status(404).json({error: 'None task found with that criteria.'})
@@ -86,9 +65,9 @@ app.get('/', ({query}, res) => {
 app.post('/', ({body, query}, res) => {
 	const {title, description} = body;
 	if (!title) return res.status(400).json({error: 'Title is required'})
-	const newEntry = new TODOEntry(title, description);
+	const newEntry = new TaskEntry(title, description);
 
-	todoList = [newEntry].concat(todoList);
+	taskList = [newEntry].concat(taskList);
 
 	return res.send({newEntry});
 });
@@ -99,20 +78,20 @@ app.put('/:id', ({body, params}, res) => {
 	const ix = findEntry(entryId);
 	if (ix === -1) return res.status(404).json({error: "Not found any entry with id of: " + entryId})
 
-	todoList[ix].title = body.title;
-	todoList[ix].description = body.description;
+	taskList[ix].title = body.title;
+	taskList[ix].description = body.description;
 
-	return res.send(todoList[ix]);
+	return res.send(taskList[ix]);
 })
 
 // Change entry status
-app.patch('/:id', ({body, params}, res) => {
+app.patch('/:id', ({params: {id: entryId}}, res) => {
 	const ix = findEntry(entryId);
 	if (ix === -1) return res.status(404).json({error: 'Not found any entry with id of: ' + entryId});
 
-	todoList[ix].state = true;
+	taskList[ix].state = !taskList[ix].state;
 
-	return res.send(todoList[ix]);
+	return res.send(taskList[ix]);
 });
 
 // Delete entry 
@@ -120,14 +99,14 @@ app.delete('/:id', ({params: {id: entryId}}, res) => {
 	const ix = findEntry(entryId);
 	if (ix === -1) return res.status(404).json({error: "Not found any entry with id of: " + entryId})
 
-	todoList.splice(ix, 1)
+	taskList.splice(ix, 1)
 
 	return res.status(200).send();
 })
 
 // Helpers
 function findEntry(entryId) {
-	return todoList.findIndex((entry) => entry.id === parseInt(entryId))
+	return taskList.findIndex((entry) => entry.id === parseInt(entryId))
 }
 
 // APP Builder

@@ -53,9 +53,19 @@ export function useTaskService(size: number) {
 		setPending(false);
 	}
 
+	async function changeTaskStatus(id: number) {
+		setPending(true);
+		try {
+			await api.patch(ApiConf.tasks.root + id);
+		} catch (e: unknown) {
+			setError(e as AxiosError)
+		}
+		setPending(false);
+	}
+
 	useEffect(() => {
 		getTasks(1)
 	}, [])
 
-	return {tasks, tasksCount, pending, error, services: {getTasks, addTask, updateTask, deleteTask}}
+	return {tasks, tasksCount, pending, error, services: {getTasks, addTask, updateTask, deleteTask, changeTaskStatus}}
 }
