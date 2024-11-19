@@ -1,50 +1,45 @@
-# React + TypeScript + Vite
+# Task List Application Documentation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This web application is a simple task list manager that allows users to add, list, delete, edit, and update properties of tasks. The
+frontend is developed using React with Vite for fast development and Material-UI for a sleek user interface. The backend is built with
+Express.js to handle API requests.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Add Task**
+- **List Tasks with Pagination**
+- **Edit Task**
+- **Delete Task**
+- **Update State Property**
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technologies Used
 
-- Configure the top-level `parserOptions` property like this:
+- **Frontend**: React, Vite, Material-UI
+- **Backend**: Express.js
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Requirements
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+To set up and run the Task List application, follow these steps:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. **Install Dependencies**:
+   Clone and navigate to the project directory and install the required dependencies using the following commands.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+   ```bash  
+   npm install  
+   ```
+
+2. **Start the Application**:
+   After installing the dependencies, you can start both the server and the frontend application with a single command. From the project
+   root, run:
+
+   ```bash  
+   npm run dev
+   ```
+
+This command will launch both the frontend and backend servers, allowing you to access the application in your browser.
+
+- By default, the frontend will be available at http://localhost:5173.
+- The backend server runs on http://localhost:3000.
+
