@@ -23,7 +23,7 @@ export function useTaskService(size: number) {
 		setPending(false);
 	}
 
-	async function addTask(title: string, description: string) {
+	async function addTask(title: string, description?: string) {
 		setPending(true);
 		try {
 			await api.post(ApiConf.tasks.root, {title, description});
@@ -33,7 +33,7 @@ export function useTaskService(size: number) {
 		setPending(false);
 	}
 
-	async function updateTask(id: string, title: string, description: string) {
+	async function updateTask(id: number, title: string, description?: string) {
 		setPending(true);
 		try {
 			await api.put(ApiConf.tasks.root + id, {title, description});
@@ -43,7 +43,7 @@ export function useTaskService(size: number) {
 		setPending(false);
 	}
 
-	async function deleteTask(id: string) {
+	async function deleteTask(id: number) {
 		setPending(true);
 		try {
 			await api.delete(ApiConf.tasks.root + id);

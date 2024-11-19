@@ -1,8 +1,7 @@
 export interface TaskDto {
-	id: string;
+	id: number;
 	title: string;
 	description?: string;
 	state: boolean;
-	endAt?: Date;
 	createAt: Date;
 }

@@ -16,7 +16,7 @@ export default function TaskList({name}: Props) {
 	const [errorNotification, setErrorNotification] = useState(false);
 	const stackParent = useRef<HTMLDivElement>()
 	const listContent = useMemo(() => {
-		return pending ? <ListPending/> : tasks.map((task) => <TaskItem task={task}/>)
+		return pending ? <ListPending/> : tasks.map((task) => <TaskItem task={task} services={{...services, setPagination}}/>)
 	}, [pending, tasks])
 
 	useEffect(() => {

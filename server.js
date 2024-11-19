@@ -121,11 +121,13 @@ app.delete('/:id', ({params: {id: entryId}}, res) => {
 	if (ix === -1) return res.status(404).json({error: "Not found any entry with id of: " + entryId})
 
 	todoList.splice(ix, 1)
+
+	return res.status(200).send();
 })
 
 // Helpers
 function findEntry(entryId) {
-	return todoList.findIndex((entry) => entry.id === entryId)
+	return todoList.findIndex((entry) => entry.id === parseInt(entryId))
 }
 
 // APP Builder

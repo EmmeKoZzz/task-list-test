@@ -1,12 +1,28 @@
 import {TaskDto} from "../../../../configurations/dto";
 import {Accordion, AccordionActions, AccordionDetails, AccordionSummary, Button, Typography} from "@mui/material";
 import {ExpandMore} from "@mui/icons-material";
+import {Dispatch, SetStateAction, useState} from "react";
+import TaskForm from "./TaskForm.tsx";
 
 interface Props {
-	task: TaskDto
+	task: TaskDto,
+	services: {
+		getTasks: (page: number, keyword?: string) => Promise<void>,
+		deleteTask: (id: number) => Promise<void>,
+		updateTask: (id: number, title: string, description?: string) => Promise<void>,
+		setPagination: Dispatch<SetStateAction<{ page: number, size: number }>>
+	}
 }
 
-export default function TaskItem({task}: Props) {
+export default function TaskItem({task, services}: Props) {
+	const [openDialog, setOpenDialog] = useState(false);
+
+	async function handleDelete() {
+		await services.deleteTask(task.id);
+		services.setPagination((old) => ({...old, page: 1}))
+		services.getTasks(1);
+	}
+	
 	return <>
 		<Accordion sx={{boxShadow: 'none', border: 1, borderColor: '#80808040'}}>
 			<AccordionSummary
@@ -22,9 +38,16 @@ export default function TaskItem({task}: Props) {
 				{task.description}
 			</AccordionDetails>
 			<AccordionActions>
-				<Button>Edit</Button>
-				<Button color={'error'}>Delete</Button>
+				<Button onClick={() => setOpenDialog(true)}>Edit</Button>
+				<Button color={'error'} onClick={handleDelete}>Delete</Button>
 			</AccordionActions>
 		</Accordion>
+		<TaskForm openState={[openDialog, setOpenDialog]}
+		          defaultValues={task}
+		          onAction={() => services.setPagination((old) => ({...old, page: 1}))}
+		          services={{
+			          getTasks: services.getTasks,
+			          action: (id, t, d) => services.updateTask(id, t, d)
+		          }}/>
 	</>
 }
