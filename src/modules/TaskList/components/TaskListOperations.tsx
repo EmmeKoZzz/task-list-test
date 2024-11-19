@@ -1,13 +1,12 @@
 import {Box, Button, Card, CardContent, Dialog, DialogTitle, Divider, InputBase, Stack, TextField} from '@mui/material';
 import {Add, Search} from '@mui/icons-material';
-import {ChangeEvent, Dispatch, useState} from "react";
+import {ChangeEvent, useState} from "react";
 
 interface Props {
-	onChange: Dispatch<string>;
 	onAdd: () => void,
 	taskServices: {
 		addTask: (title: string, description: string) => Promise<void>,
-		getTasks: (page: number) => Promise<void>
+		getTasks: (page: number, string?: string) => Promise<void>
 	}
 }
 
@@ -16,7 +15,8 @@ const defaultDialogFormValue = {
 	description: ''
 }
 
-export default function TaskListOperations({onChange, taskServices, onAdd}: Props) {
+export default function TaskListOperations({taskServices, onAdd}: Props) {
+	const [search, setSearch] = useState('');
 	const [openDialog, setOpenDialog] = useState(false);
 	const [fieldValidation, setFieldValidation] = useState({title: false})
 	const [form, setForm] = useState(defaultDialogFormValue);
@@ -38,6 +38,9 @@ export default function TaskListOperations({onChange, taskServices, onAdd}: Prop
 		setOpenDialog(false)
 	}
 
+	function handleSearch() {
+		taskServices.getTasks(1, search.trim() === '' ? undefined : search)
+	}
 
 	return <>
 		<Stack direction="row" spacing={2}>
@@ -48,10 +51,10 @@ export default function TaskListOperations({onChange, taskServices, onAdd}: Prop
 				<InputBase
 					sx={{ml: 1, flex: 1, color: 'black'}}
 					placeholder="Search"
-					onChange={(e) => onChange(e.target.value)}
+					onChange={(e) => setSearch(e.target.value)}
 				/>
 				<Divider variant="middle" orientation="vertical"/>
-				<Button>
+				<Button onClick={handleSearch}>
 					<Search sx={{fill: 'gray'}}/>
 				</Button>
 			</Box>

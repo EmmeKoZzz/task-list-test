@@ -63,16 +63,23 @@ app.use(express.json());
 // CONTROLLERS
 // Get ToDoList
 app.get('/', ({query}, res) => {
-	let {page, size} = query
-	if (!page) return res.send({data: todoList, count: todoList.length})
+	let {page, size, keyword} = query
+	let list = todoList;
+	if (keyword) {
+		list = todoList.filter(todo => todo.title.toLowerCase().includes(keyword.toLocaleLowerCase()))
+	}
+
+	if (list.length === 0) return res.status(404).json({error: 'None task found with that criteria.'})
+
+	if (!page) return res.send({data: list, count: list.length})
 
 	page = parseInt(page);
 	size = parseInt(size);
-	if (isNaN(page) || isNaN(size) || page < 1 || page > Math.ceil(todoList.length / size))
+	if (isNaN(page) || isNaN(size) || page < 1 || page > Math.ceil(list.length / size))
 		return res.status(400).json({error: 'Pagination params invalid'})
 
-	const data = todoList.slice((page - 1) * size, page * size)
-	return res.send({data, count: todoList.length})
+	const data = list.slice((page - 1) * size, page * size)
+	return res.send({data, count: list.length})
 });
 
 // Create a new entry

@@ -11,10 +11,10 @@ export function useTaskService(size: number) {
 	const [pending, setPending] = useState(false);
 	const [error, setError] = useState<AxiosError | undefined>();
 
-	async function getTasks(page: number) {
+	async function getTasks(page: number, keyword?: string) {
 		setPending(true);
 		try {
-			const {data} = await api.get(ApiConf.tasks.root, {params: {size, page}});
+			const {data} = await api.get(ApiConf.tasks.root, {params: {size, page, keyword}});
 			setTasks(data.data);
 			setTasksCount(data.count);
 		} catch (e: unknown) {

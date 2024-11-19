@@ -11,7 +11,6 @@ interface Props {
 }
 
 export default function TaskList({name}: Props) {
-	const [search, setSearch] = useState('');
 	const [{page, size}, setPagination] = useState({page: 1, size: 5});
 	const {tasks, pending, services, error, tasksCount} = useTaskService(size);
 	const [errorNotification, setErrorNotification] = useState(false);
@@ -37,7 +36,7 @@ export default function TaskList({name}: Props) {
 						<Typography variant="h4">
 							{name || 'Your Task List'}
 						</Typography>
-						<TaskListOperations onChange={setSearch} taskServices={services} onAdd={() => setPagination({size, page: 1})}/>
+						<TaskListOperations taskServices={services} onAdd={() => setPagination({size, page: 1})}/>
 					</Stack>
 					<Box sx={{flexGrow: 1, display: 'flex', overflow: 'hidden', pb: 2}} ref={stackParent}>
 						<Stack sx={{
@@ -57,7 +56,7 @@ export default function TaskList({name}: Props) {
 			anchorOrigin={{vertical: 'top', horizontal: 'right'}}
 			open={errorNotification}
 			onClose={() => setErrorNotification(false)}
-			autoHideDuration={3000}
+			autoHideDuration={5000}
 			message={"Something wrong happen!!: " + error?.status}
 		/>
 	</>
