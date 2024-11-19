@@ -27,7 +27,36 @@ const port = 3000;
 
 // Server State
 let countId = 0;
-let todoList = []
+let todoList = [
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'}),
+	new TODOEntry('You can specify how many digits', {description: 'The Textarea Autosize component gives you a textarea HTML element that automatically adjusts its height to match the length of the content within.'})
+]
 
 // MIDDLEWARES
 app.use(cors());

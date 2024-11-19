@@ -8,7 +8,7 @@ interface Props {
 
 export default function TaskListOperations({onInput}: Props) {
 	return <Stack direction="row" spacing={2} sx={{}}>
-		<Button variant="contained" startIcon={<Add/>}>
+		<Button variant="outlined" startIcon={<Add/>}>
 			Add
 		</Button>
 		<Box sx={{width: 1 / 3}}/>
