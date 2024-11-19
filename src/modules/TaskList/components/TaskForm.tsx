@@ -13,28 +13,41 @@ interface Props {
 
 export default function TaskForm({defaultValues, services, onAction, openState: [openDialog, setOpenDialog]}: Props) {
 	const [fieldValidation, setFieldValidation] = useState({title: false})
-	const [form, setForm] = useState(defaultValues);
+	const [form, setForm] = useState(DefaultState());
+
+	function DefaultState() {
+		return {
+			title: defaultValues?.title ?? '',
+			id: defaultValues?.id ?? -1,
+			description: defaultValues?.description
+		}
+	}
 
 	function updateForm(field: 'title' | 'description', event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-		setForm((oldValue) => ({...oldValue, [field]: event.target.value.trim()}))
+		setForm((oldValue) => ({...oldValue, [field]: event.target.value}))
 	}
 
 	async function handleAction() {
-		if ((form?.title ?? '').trim() === '') {
+		const normalizeStatus = {...form, title: form.title.trim(), description: form.description?.trim()};
+		const {title, description, id} = normalizeStatus;
+		setForm(normalizeStatus)
+
+		if ((title === '')) {
 			setFieldValidation({title: true})
 			return;
 		}
 		setFieldValidation({title: false})
 
-		await services.action(defaultValues?.id ?? -1, form?.title ?? '', form?.description,)
+		await services.action(id, title, description)
 		services.getTasks(1)
 		onAction();
+		setForm(DefaultState());
 		setOpenDialog(false)
 	}
 
 	return <>
 		<Dialog onClose={() => {
-			setForm(defaultValues);
+			setForm(DefaultState());
 			setOpenDialog(!openDialog)
 		}} open={openDialog}>
 			<Card>

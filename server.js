@@ -48,7 +48,7 @@ app.get('/', ({query}, res) => {
 		list = taskList.filter(todo => todo.title.toLowerCase().includes(keyword.toLocaleLowerCase()))
 	}
 
-	if (list.length === 0) return res.status(404).json({error: 'None task found with that criteria.'})
+	if (list.length === 0) return res.send({data: [], count: 0})
 
 	if (!page) return res.send({data: list, count: list.length})
 
@@ -64,7 +64,7 @@ app.get('/', ({query}, res) => {
 // Create a new entry
 app.post('/', ({body, query}, res) => {
 	const {title, description} = body;
-	if (!title) return res.status(400).json({error: 'Title is required'})
+	if (!title || title.trim() === '') return res.status(400).json({error: 'Title is required'})
 	const newEntry = new TaskEntry(title, description);
 
 	taskList = [newEntry].concat(taskList);
