@@ -2,6 +2,7 @@ import {Box, Button, Card, CardContent, Dialog, DialogTitle, Stack, TextField} f
 import {ChangeEvent, Dispatch, SetStateAction, useState} from "react";
 
 interface Props {
+	title: string
 	openState: [boolean, Dispatch<SetStateAction<boolean>>];
 	defaultValues?: { title?: string, description?: string, id?: number };
 	onAction: () => void;
@@ -11,7 +12,7 @@ interface Props {
 	}
 }
 
-export default function TaskForm({defaultValues, services, onAction, openState: [openDialog, setOpenDialog]}: Props) {
+export default function TaskForm({defaultValues, services, onAction, openState: [openDialog, setOpenDialog], title}: Props) {
 	const [fieldValidation, setFieldValidation] = useState({title: false})
 	const [form, setForm] = useState(DefaultState());
 
@@ -52,12 +53,12 @@ export default function TaskForm({defaultValues, services, onAction, openState: 
 		}} open={openDialog}>
 			<Card>
 				<CardContent sx={{minWidth: '400px', display: 'flex', flexDirection: 'column'}}>
-					<DialogTitle>Add new task:</DialogTitle>
+					<DialogTitle>{title}:</DialogTitle>
 					<Stack spacing={2}>
 						<TextField sx={{flex: 1}}
 						           label="Title"
 						           value={form?.title}
-						           variant="filled"
+						           variant="outlined"
 						           onChange={(e) => updateForm('title', e)}
 						           error={fieldValidation.title}
 						           helperText={fieldValidation.title ? 'Este campo es requerido.' : undefined}
@@ -65,7 +66,7 @@ export default function TaskForm({defaultValues, services, onAction, openState: 
 						<TextField sx={{flex: 1}}
 						           label="Description"
 						           value={form?.description}
-						           variant="filled"
+						           variant="outlined"
 						           multiline
 						           onChange={(e) => updateForm('description', e)}
 						/>

@@ -36,11 +36,13 @@ export default function TaskListOperations({taskServices, onAdd}: Props) {
 				</Button>
 			</Box>
 		</Stack>
-		<TaskForm openState={[openDialog, setOpenDialog]}
-		          onAction={onAdd}
-		          services={{
-			          getTasks: taskServices.getTasks,
-			          action: (_, t, d) => taskServices.addTask(t, d)
-		          }}/>
+		<TaskForm
+			title="Add new task"
+			openState={[openDialog, setOpenDialog]}
+			onAction={onAdd}
+			services={{
+				getTasks: taskServices.getTasks,
+				action: (_, t, d) => taskServices.addTask(t, d)
+		}}/>
 	</>
 }

@@ -51,12 +51,14 @@ export default function TaskItem({task, services}: Props) {
 				<Button color="error" onClick={handleDelete}>Delete</Button>
 			</AccordionActions>
 		</Accordion>
-		<TaskForm openState={[openDialog, setOpenDialog]}
-		          defaultValues={task}
-		          onAction={() => services.setPagination((old) => ({...old, page: 1}))}
-		          services={{
-			          getTasks: services.getTasks,
-			          action: (id, t, d) => services.updateTask(id, t, d)
-		          }}/>
+		<TaskForm
+			title="Edit task"
+			openState={[openDialog, setOpenDialog]}
+			defaultValues={task}
+			onAction={() => services.setPagination((old) => ({...old, page: 1}))}
+			services={{
+				getTasks: services.getTasks,
+				action: (id, t, d) => services.updateTask(id, t, d)
+			}}/>
 	</>
 }
