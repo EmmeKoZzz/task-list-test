@@ -18,6 +18,12 @@ interface Props {
 export default function TaskItem({task, services}: Props) {
 	const [openDialog, setOpenDialog] = useState(false);
 
+	async function handleEdit(id: number, title: string, description?: string) {
+		await services.updateTask(id, title, description)
+		services.setPagination((old) => ({...old, page: 1}))
+		services.getTasks(1);
+	}
+
 	async function handleDelete() {
 		await services.deleteTask(task.id);
 		services.setPagination((old) => ({...old, page: 1}))
@@ -56,9 +62,7 @@ export default function TaskItem({task, services}: Props) {
 			openState={[openDialog, setOpenDialog]}
 			defaultValues={task}
 			onAction={() => services.setPagination((old) => ({...old, page: 1}))}
-			services={{
-				getTasks: services.getTasks,
-				action: (id, t, d) => services.updateTask(id, t, d)
-			}}/>
+			action={handleEdit}
+		/>
 	</>
 }

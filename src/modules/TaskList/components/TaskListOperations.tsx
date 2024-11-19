@@ -19,6 +19,11 @@ export default function TaskListOperations({taskServices, onAdd}: Props) {
 		taskServices.getTasks(1, search.trim() === '' ? undefined : search)
 	}
 
+	async function handleAdd(_: number, title: string, description?: string) {
+		await taskServices.addTask(title, description);
+		taskServices.getTasks(1);
+	}
+
 	return <>
 		<Stack direction="row" spacing={2}>
 			<Button variant="outlined" startIcon={<Add/>} onClick={() => setOpenDialog(!openDialog)}>
@@ -45,9 +50,7 @@ export default function TaskListOperations({taskServices, onAdd}: Props) {
 			title="Add new task"
 			openState={[openDialog, setOpenDialog]}
 			onAction={onAdd}
-			services={{
-				getTasks: taskServices.getTasks,
-				action: (_, t, d) => taskServices.addTask(t, d)
-		}}/>
+			action={handleAdd}
+		/>
 	</>
 }

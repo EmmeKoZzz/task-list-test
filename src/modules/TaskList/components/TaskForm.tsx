@@ -6,13 +6,11 @@ interface Props {
 	openState: [boolean, Dispatch<SetStateAction<boolean>>];
 	defaultValues?: { title?: string, description?: string, id?: number };
 	onAction: () => void;
-	services: {
-		getTasks: (page: number) => Promise<void>,
-		action: (id: number, title: string, description?: string) => Promise<void>
-	}
+	action: (id: number, title: string, description?: string) => Promise<void>
+	
 }
 
-export default function TaskForm({defaultValues, services, onAction, openState: [openDialog, setOpenDialog], title}: Props) {
+export default function TaskForm({defaultValues, action, onAction, openState: [openDialog, setOpenDialog], title}: Props) {
 	const [fieldValidation, setFieldValidation] = useState({title: false})
 	const [form, setForm] = useState(DefaultState());
 
@@ -39,8 +37,7 @@ export default function TaskForm({defaultValues, services, onAction, openState: 
 		}
 		setFieldValidation({title: false})
 
-		await services.action(id, title, description)
-		services.getTasks(1)
+		await action(id, title, description)
 		onAction();
 		setForm(DefaultState());
 		setOpenDialog(false)
