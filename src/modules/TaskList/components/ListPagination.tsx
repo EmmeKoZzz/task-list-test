@@ -1,4 +1,4 @@
-import {Box, InputBase, Pagination, Stack, Typography} from "@mui/material";
+import {Box, MenuItem, Pagination, Stack, TextField, Typography} from "@mui/material";
 import {ChangeEvent, Dispatch, SetStateAction} from "react";
 
 interface Props {
@@ -6,6 +6,8 @@ interface Props {
 	pagesCount: number;
 	onChangePage: Dispatch<SetStateAction<{ page: number, size: number }>>;
 }
+
+const sizeOptions = [5, 10, 20, 50]
 
 export default function ListPagination({pagesCount, onChangePage, currentPage}: Props) {
 	const handleSelectPage = (event: ChangeEvent<HTMLInputElement>) => {
@@ -15,14 +17,29 @@ export default function ListPagination({pagesCount, onChangePage, currentPage}: 
 	};
 	const handleChangePage = (_: unknown, value: number) =>
 		onChangePage((oldValue) => ({...oldValue, page: value}));
+	const handleChangeSize = (event: ChangeEvent<HTMLInputElement>) =>
+		onChangePage({page: 1, size: parseInt(event.target.value)});
 
 	if (pagesCount < 1) return <></>;
 	return <>
 		<Stack spacing={2} direction="row" sx={{alignItems: 'center'}}>
+			<Typography>Size:</Typography>
+			<TextField
+				variant="standard"
+				select
+				defaultValue={sizeOptions[0]}
+				onChange={handleChangeSize}
+			>
+				{sizeOptions.map((option) => (
+					<MenuItem value={option}>
+						{option}
+					</MenuItem>
+				))}
+			</TextField>
 			<Box sx={{flexGrow: 1}}></Box>
 			<Typography>Page:</Typography>
-			<InputBase onChange={handleSelectPage} value={currentPage}
-			           sx={{borderBottom: '1px solid', width: `${10 * pagesCount.toString().length}px`}}/>
+			<TextField variant="standard" onChange={handleSelectPage} value={currentPage}
+			           sx={{width: `${12 * pagesCount.toString().length}px`}}/>
 			<Pagination count={pagesCount} page={currentPage} onChange={handleChangePage}/>
 		</Stack>
 	</>

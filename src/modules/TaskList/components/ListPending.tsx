@@ -1,8 +1,8 @@
-import {Box, Typography} from "@mui/material";
+import {CircularProgress, Stack} from "@mui/material";
 
 export default function ListPending() {
 
-	return <Box sx={{py: 10, textAlign: 'center'}}>
-		<Typography variant={"h4"}>Getting your tasks...</Typography>
-	</Box>
+	return <Stack sx={{textAlign: 'center', alignItems: 'center', justifyContent: 'center', height: 1}}>
+		<CircularProgress color="inherit"/>
+	</Stack>
 }
