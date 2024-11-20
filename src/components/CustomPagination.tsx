@@ -9,7 +9,7 @@ interface Props {
 
 const sizeOptions = [5, 10, 20, 50]
 
-export default function ListPagination({pagesCount, onChangePage, currentPage}: Props) {
+export function CustomPagination({pagesCount, onChangePage, currentPage}: Props) {
 	const handleSelectPage = (event: ChangeEvent<HTMLInputElement>) => {
 		const selectedPage = parseInt(event.target.value)
 		if (selectedPage < 1 || selectedPage > pagesCount) return;

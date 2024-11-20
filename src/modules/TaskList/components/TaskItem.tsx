@@ -2,7 +2,7 @@ import {TaskDto} from "../../../../configurations/dto";
 import {Accordion, AccordionActions, AccordionDetails, AccordionSummary, Button, Typography} from "@mui/material";
 import {ExpandMore} from "@mui/icons-material";
 import {Dispatch, SetStateAction, useState} from "react";
-import TaskForm from "./TaskForm.tsx";
+import {TaskForm} from "./TaskForm.tsx";
 
 interface Props {
 	task: TaskDto,
@@ -15,7 +15,7 @@ interface Props {
 	}
 }
 
-export default function TaskItem({task, services}: Props) {
+export function TaskItem({task, services}: Props) {
 	const [openDialog, setOpenDialog] = useState(false);
 
 	async function handleEdit(id: number, title: string, description?: string) {

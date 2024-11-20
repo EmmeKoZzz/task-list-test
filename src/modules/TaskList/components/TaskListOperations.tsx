@@ -1,7 +1,7 @@
 import {Box, Button, Divider, InputBase, Stack} from '@mui/material';
 import {Add, Search} from '@mui/icons-material';
 import {useState} from "react";
-import TaskForm from "./TaskForm.tsx";
+import {TaskForm} from "./TaskForm.tsx";
 
 interface Props {
 	onAdd: () => void,
@@ -11,7 +11,7 @@ interface Props {
 	}
 }
 
-export default function TaskListOperations({taskServices, onAdd}: Props) {
+export function TaskListOperations({taskServices, onAdd}: Props) {
 	const [search, setSearch] = useState('');
 	const [openDialog, setOpenDialog] = useState(false);
 

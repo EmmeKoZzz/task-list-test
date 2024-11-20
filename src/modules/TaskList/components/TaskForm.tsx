@@ -10,7 +10,7 @@ interface Props {
 	
 }
 
-export default function TaskForm({defaultValues, action, onAction, openState: [openDialog, setOpenDialog], title}: Props) {
+export function TaskForm({defaultValues, action, onAction, openState: [openDialog, setOpenDialog], title}: Props) {
 	const [fieldValidation, setFieldValidation] = useState({title: false})
 	const [form, setForm] = useState(DefaultState());
 
