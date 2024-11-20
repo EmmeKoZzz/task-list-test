@@ -67,7 +67,7 @@ export function CustomScrollBox({children, className, styles}: Props) {
 
 		return () => {
 			resizeObserver.disconnect();
-			content.removeEventListener('mousemove', eventListeners.mouseMove.content);
+			elements.container.current.removeEventListener('mousemove', eventListeners.mouseMove.content);
 			content.removeEventListener('wheel', eventListeners.wheel);
 			cursor.removeEventListener('mousedown', eventListeners.mouseDown);
 		}
