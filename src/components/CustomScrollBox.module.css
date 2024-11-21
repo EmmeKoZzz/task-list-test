@@ -2,6 +2,8 @@
     display: flex;
     flex: 1;
     position: relative;
+    border-radius: 5px;
+    border: 1px solid #80808080;
 }
 
 .container .content {
@@ -11,7 +13,7 @@
     max-height: 100%;
     max-width: 100%;
     flex: 1;
-    padding: 5px 0;
+    padding: 5px;
 }
 
 .scrollBar {
@@ -20,14 +22,16 @@
     position: absolute;
     height: 100%;
     right: 0;
+    background: #00000010;
 }
 
 .scrollBar > div {
+    position: relative;
     transition-duration: .1s;
     transition: margin-top 0s;
     border-radius: 3px;
     width: 10px;
-    background: #00000020;
+    background: #00000030;
 }
 
 .scrollBar > div:hover, .scrollBar > div:active {

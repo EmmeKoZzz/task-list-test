@@ -17,6 +17,7 @@ export function CustomScrollBox({children, className, styles}: Props) {
 		scrollCursor: useRef(div),
 	}
 	const timerID = useRef<number>();
+	const lockCursorVisibility = useRef(false);
 
 	useEffect(() => {
 		const content = elements.content.current;
@@ -28,28 +29,30 @@ export function CustomScrollBox({children, className, styles}: Props) {
 		const contentScrollableSpace = () => content.scrollHeight - content.clientHeight;
 
 		const contentScrolledPercentage = () => Math.round((content.scrollTop / contentScrollableSpace()) * 100) / 100;
-		const barScrolledPercentage = () => Math.round((parseInt(cursor.style.marginTop) / scrollBarScrollableSpace()) * 100) / 100;
+		const barScrolledPercentage = () => Math.round((parseInt(cursor.style.top) / scrollBarScrollableSpace()) * 100) / 100;
 
 		const eventListeners = {
 			wheel: (ev: WheelEvent) => {
 				content.scrollTop += ev.deltaY;
 				handleCursorVisibility();
-				cursor.style.marginTop = `${contentScrolledPercentage() * scrollBarScrollableSpace()}px`;
+				cursor.style.top = `${contentScrolledPercentage() * scrollBarScrollableSpace()}px`;
 			},
 			mouseMove: {
 				cursor: (ev: MouseEvent) => {
 					moveScrollCursor(ev);
 					content.scrollTop = Math.floor(barScrolledPercentage() * contentScrollableSpace());
-					document?.addEventListener('mouseup', eventListeners.mouseUp);
+					document.addEventListener('mouseup', eventListeners.mouseUp);
 				},
-				content: handleCursorVisibility,
+				container: handleCursorVisibility,
 			},
 			mouseDown: (ev: MouseEvent) => {
 				ev.preventDefault();
-				clearTimeout(timerID.current);
-				document?.addEventListener('mousemove', eventListeners.mouseMove.cursor)
+				lockCursorVisibility.current = true;
+				handleCursorVisibility()
+				document.addEventListener('mousemove', eventListeners.mouseMove.cursor)
 			},
 			mouseUp: () => {
+				lockCursorVisibility.current = false;
 				cursorTemporizer();
 				document.removeEventListener('mousemove', eventListeners.mouseMove.cursor)
 			},
@@ -57,17 +60,17 @@ export function CustomScrollBox({children, className, styles}: Props) {
 
 		const resizeObserver = new MutationObserver(() => {
 			cursorSize();
-			cursor.style.marginTop = `${contentScrolledPercentage() * scrollBarScrollableSpace()}px`;
+			cursor.style.top = `${contentScrolledPercentage() * scrollBarScrollableSpace()}px`;
 		});
 
 		resizeObserver.observe(content, {attributes: true, childList: true, subtree: true});
-		elements.container.current.addEventListener('mousemove', eventListeners.mouseMove.content);
+		elements.container.current.addEventListener('mousemove', eventListeners.mouseMove.container);
 		content.addEventListener('wheel', eventListeners.wheel);
 		cursor.addEventListener('mousedown', eventListeners.mouseDown);
 
 		return () => {
 			resizeObserver.disconnect();
-			elements.container.current.removeEventListener('mousemove', eventListeners.mouseMove.content);
+			elements.container.current.removeEventListener('mousemove', eventListeners.mouseMove.container);
 			content.removeEventListener('wheel', eventListeners.wheel);
 			cursor.removeEventListener('mousedown', eventListeners.mouseDown);
 		}
@@ -83,7 +86,7 @@ export function CustomScrollBox({children, className, styles}: Props) {
 			if (!isScrollable()) return;
 			bar.style.opacity = '1';
 			clearTimeout(timerID.current);
-			cursorTemporizer()
+			if (!lockCursorVisibility.current) cursorTemporizer()
 		}
 
 		function cursorSize() {
@@ -92,11 +95,11 @@ export function CustomScrollBox({children, className, styles}: Props) {
 		}
 
 		function moveScrollCursor(ev: MouseEvent) {
-			const currentY = parseInt(cursor.style.marginTop);
+			const currentY = parseInt(cursor.style.top);
 			let increment = ev.movementY;
 			if (currentY + increment <= 0 || currentY + increment >= scrollBarScrollableSpace())
 				increment = 0;
-			cursor.style.marginTop = `${currentY + increment}px`;
+			cursor.style.top = `${currentY + increment}px`;
 		}
 	}, [elements.container, elements.content, elements.scrollBar, elements.scrollCursor]);
 
@@ -105,7 +108,7 @@ export function CustomScrollBox({children, className, styles}: Props) {
 			{children}
 		</div>
 		<div className={style.scrollBar} ref={elements.scrollBar}>
-			<div style={{marginTop: 0}} ref={elements.scrollCursor}/>
+			<div ref={elements.scrollCursor}/>
 		</div>
 	</div>
 }

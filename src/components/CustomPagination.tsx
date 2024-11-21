@@ -30,8 +30,8 @@ export function CustomPagination({pagesCount, onChangePage, currentPage}: Props)
 				defaultValue={sizeOptions[0]}
 				onChange={handleChangeSize}
 			>
-				{sizeOptions.map((option) => (
-					<MenuItem value={option}>
+				{sizeOptions.map((option, ix) => (
+					<MenuItem value={option} key={`${ix}${option}`}>
 						{option}
 					</MenuItem>
 				))}

@@ -15,7 +15,9 @@ export default function TaskList({name}: Props) {
 	const [errorNotification, setErrorNotification] = useState(false);
 
 	const listContent = useMemo(() => {
-		return pending ? <PendingSpin/> : tasks.map((task) => <TaskItem task={task} services={{...services, setPagination}}/>)
+		return pending 
+			? <PendingSpin/> 
+			: tasks.map((task) => <TaskItem task={task} key={task.id} services={{...services, setPagination}}/>)
 	}, [pending, tasks])
 
 	useEffect(() => {
