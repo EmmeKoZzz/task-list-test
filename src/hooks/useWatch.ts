@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 
-export function useWatch<T>(prop: () => T, callback: (old: T, val: T) => void, timeout: number = 100) {
+export function useWatch<T>(prop: () => T, callback: (old: T, val: T) => void, timeout: number = 10) {
 	const [isWatching, setIsWatching] = useState(true);
 	const oldValRef = useRef(prop());
 	const intervalRef = useRef<number>();
@@ -15,7 +15,6 @@ export function useWatch<T>(prop: () => T, callback: (old: T, val: T) => void, t
 				if (current !== oldValRef.current) {
 					callback(oldValRef.current, current)
 					oldValRef.current = current;
-					clearInterval(intervalRef.current);
 				}
 			}, timeout);
 			return;

@@ -1,5 +1,6 @@
 import style from './CustomScrollBox.module.css';
 import {CSSProperties, ReactNode, useEffect, useRef} from "react";
+import {Watcher} from "../helpers";
 
 interface Props {
 	children: ReactNode;
@@ -18,7 +19,8 @@ export function CustomScrollBox({children, className, styles}: Props) {
 	}
 	const timerID = useRef<number>();
 	const lockCursorVisibility = useRef(false);
-
+	// const watcher = useWatch(() => elements.content.current.scrollHeight, console.log);
+		
 	useEffect(() => {
 		const content = elements.content.current;
 		const cursor = elements.scrollCursor.current;
@@ -58,18 +60,20 @@ export function CustomScrollBox({children, className, styles}: Props) {
 			},
 		}
 
-		const resizeObserver = new MutationObserver(() => {
+		const watcher = new Watcher(() => content.scrollHeight, () => {
+			if (isScrollable()) {
 			cursorSize();
 			cursor.style.top = `${contentScrolledPercentage() * scrollBarScrollableSpace()}px`;
+			} else bar.style.opacity = '0';
 		});
 
-		resizeObserver.observe(content, {attributes: true, childList: true, subtree: true});
+		watcher.connect();
 		elements.container.current.addEventListener('mousemove', eventListeners.mouseMove.container);
 		content.addEventListener('wheel', eventListeners.wheel);
 		cursor.addEventListener('mousedown', eventListeners.mouseDown);
 
 		return () => {
-			resizeObserver.disconnect();
+			watcher.disconnect();
 			elements.container.current.removeEventListener('mousemove', eventListeners.mouseMove.container);
 			content.removeEventListener('wheel', eventListeners.wheel);
 			cursor.removeEventListener('mousedown', eventListeners.mouseDown);
