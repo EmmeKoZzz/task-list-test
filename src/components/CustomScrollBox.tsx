@@ -60,7 +60,7 @@ export function CustomScrollBox({children, className, styles}: Props) {
 			},
 		}
 
-		const watcher = new Watcher(() => content.scrollHeight, () => {
+		const watcher = new Watcher([() => content.scrollHeight, () => content.clientHeight], () => {
 			if (isScrollable()) {
 			cursorSize();
 			cursor.style.top = `${contentScrolledPercentage() * scrollBarScrollableSpace()}px`;

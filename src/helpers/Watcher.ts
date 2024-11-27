@@ -1,5 +1,5 @@
 export class Watcher<T> {
-	private oldVal: T;
+	private oldVal: T[];
 	private intervalId: number | undefined;
 
 	private _isWatching: boolean = true;
@@ -8,16 +8,16 @@ export class Watcher<T> {
 	}
 
 	constructor(
-		private prop: () => T,
-		private callback: (old: T, val: T) => void,
+		private prop: (() => T)[],
+		private callback: (old: T[], val: T[]) => void,
 		private timeout: number = 10) {
-		this.oldVal = prop();
+		this.oldVal = this.prop.map(p => p())
 	}
 
 	connect() {
 		this.intervalId = setInterval(() => {
-			const current = this.prop();
-			if (current !== this.oldVal) {
+			const current = this.prop.map(p => p());
+			if (this.oldVal.some((val, ix) => val !== current[ix])) {
 				this.callback(this.oldVal, current);
 				this.oldVal = current;
 			}
