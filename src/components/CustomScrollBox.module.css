@@ -17,25 +17,26 @@
 }
 
 .scrollBar {
-    transition: .2s;
+    transition: .1s;
     opacity: 0;
     position: absolute;
-    height: 100%;
-    right: 0;
-    background: #00000010;
+    height: calc(100% - 10px);
+    right: 2px;
+    background: #80808080;
+    padding: 3px;
+    margin: 5px 0;
+    border-radius: 10px;
 }
 
 .scrollBar > div {
+    transition: width .2s ,margin-top 0s, background .2s;
     position: relative;
-    transition-duration: .1s;
-    transition: margin-top 0s;
     border-radius: 3px;
-    width: 10px;
-    background: #00000030;
+    width: 5px;
+    background: #00000050;
 }
 
 .scrollBar > div:hover, .scrollBar > div:active {
-    transition-duration: .2s;
-    transition: margin-top 0s;
-    background: #00000050;
+    background: #00000080;
+    width: 7px;
 }

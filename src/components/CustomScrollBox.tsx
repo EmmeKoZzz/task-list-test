@@ -20,14 +20,17 @@ export function CustomScrollBox({children, className, styles}: Props) {
 	const timerID = useRef<number>();
 	const lockCursorVisibility = useRef(false);
 	// const watcher = useWatch(() => elements.content.current.scrollHeight, console.log);
-		
+
 	useEffect(() => {
 		const content = elements.content.current;
 		const cursor = elements.scrollCursor.current;
 		const bar = elements.scrollBar.current;
 
 		const isScrollable = () => content.clientHeight < content.scrollHeight;
-		const scrollBarScrollableSpace = () => content.clientHeight - cursor.clientHeight;
+		const scrollBarScrollableSpace = () => {
+			const barStyle = window.getComputedStyle(bar);
+			return bar.clientHeight - parseFloat(barStyle.paddingTop) - parseFloat(barStyle.paddingBottom) - cursor.clientHeight;
+		}
 		const contentScrollableSpace = () => content.scrollHeight - content.clientHeight;
 
 		const contentScrolledPercentage = () => Math.round((content.scrollTop / contentScrollableSpace()) * 100) / 100;
